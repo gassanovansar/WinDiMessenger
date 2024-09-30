@@ -14,6 +14,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.bottomSheet.BottomSheetNavigator
 import com.example.core.RootNavigator
 import com.example.uikit.theme.AppTheme
+import com.example.windimessenger.feature.auth.AuthScreen
 import com.example.windimessenger.feature.splash.SplashScreen
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -31,7 +32,7 @@ internal fun App() {
                     topEndPercent = 8
                 )
             ) {
-                Navigator(SplashScreen()) {
+                Navigator(AuthScreen()) {
                     CompositionLocalProvider(
                         RootNavigator provides it,
                     ) {
