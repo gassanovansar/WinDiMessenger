@@ -15,6 +15,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.windimessenger.feature.tab.TabScreen
 import com.example.uikit.screens.PageContainer
 import com.example.uikit.theme.AppTheme
+import com.example.windimessenger.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 

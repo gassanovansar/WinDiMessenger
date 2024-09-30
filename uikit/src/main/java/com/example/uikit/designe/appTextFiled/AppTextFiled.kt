@@ -2,6 +2,7 @@ package com.example.uikit.designe.appTextFiled
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -35,7 +36,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core.ext.clickableRound
 import com.example.uikit.theme.AppTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -76,7 +76,7 @@ fun AppTextField(
             elevation = 0.dp,
             modifier = Modifier
                 .defaultMinSize(minHeight = 40.dp)
-                .clickableRound(8.dp) {
+                .clickable {
                     onClick()
                 },
             border = if (error) BorderStroke(1.dp, AppTheme.colors.red) else null,

@@ -1,5 +1,6 @@
 package com.example.uikit.designe.appTextFiled
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -18,7 +19,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
@@ -30,7 +30,6 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.core.ext.clickableRound
 import com.example.uikit.theme.AppTheme
 
 @Composable
@@ -64,7 +63,7 @@ fun DefaultTextFiled(
     var isFocused by remember { mutableStateOf(false) }
     Box(modifier = modifier
         .defaultMinSize(minHeight = 40.dp)
-        .clickableRound(8.dp) {
+        .clickable{
             onClick()
         }) {
         Row(modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)) {

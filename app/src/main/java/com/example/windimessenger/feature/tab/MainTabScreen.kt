@@ -19,8 +19,8 @@ object MainTabScreen : Tab {
         @Composable
         get() = TabOptions(
             index = 1.toUShort(),
-            title = "Профиль",
-            icon = painterResource(id = R.drawable.ic_profile)
+            title = "Чаты",
+            icon = painterResource(id = R.drawable.ic_message)
         )
 
 

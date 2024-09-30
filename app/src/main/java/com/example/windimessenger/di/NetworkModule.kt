@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 val networkModule = module {
     single {
-        Retrofit.Builder().baseUrl("https://api.adampay.ru/")
+        Retrofit.Builder().baseUrl("https://plannerok.ru/docs#/)")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }

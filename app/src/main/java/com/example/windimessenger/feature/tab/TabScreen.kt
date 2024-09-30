@@ -35,11 +35,6 @@ class TabScreen(private val tab: Tab = MainTabScreen) : Screen {
 
     @Composable
     override fun Content() {
-        val viewModel = rememberScreenModel { TabScreenModel() }
-        val state by viewModel.state.collectAsState()
-        LaunchedEffect(viewModel) {
-            viewModel.favouriteCount()
-        }
         TabNavigator(
             tab = tab,
             disposeNestedNavigators = true
@@ -55,6 +50,7 @@ class TabScreen(private val tab: Tab = MainTabScreen) : Screen {
                             .background(AppTheme.colors.shadows)
                             .padding(vertical = 8.dp)
                     ) {
+                        TabNavItem(MainTabScreen)
                         TabNavItem(ProfileTabScreen)
                     }
                 }
@@ -63,7 +59,7 @@ class TabScreen(private val tab: Tab = MainTabScreen) : Screen {
     }
 
     @Composable
-    private fun RowScope.TabNavItem(tab: Tab, notificationCount: Int = 0) {
+    private fun RowScope.TabNavItem(tab: Tab) {
         val tabNavigator = LocalTabNavigator.current
         val selected = tabNavigator.current == tab
         val color = if (selected) AppTheme.colors.blue else AppTheme.colors.gray4
@@ -83,33 +79,9 @@ class TabScreen(private val tab: Tab = MainTabScreen) : Screen {
                         contentDescription = null,
                         colorFilter = ColorFilter.tint(color),
                         modifier = Modifier
-                            .padding(
-                                top = 4.dp,
-                                end = if (tab == FavouriteTabScreen) 4.dp else 0.dp
-                            )
+                            .padding(top = 4.dp)
                             .size(24.dp)
                     )
-                    if (tab == FavouriteTabScreen && notificationCount > 0) {
-                        AppCard(
-                            shape = CircleShape,
-                            backgroundColor = AppTheme.colors.red,
-                            modifier = Modifier
-                                .padding(top = 4.dp)
-                                .size(13.dp)
-                                .align(Alignment.TopEnd)
-                        ) {
-                            Text(
-                                modifier = Modifier.align(Alignment.Center),
-                                text = notificationCount.toString(),
-                                style = AppTheme.typography.semiBold.copy(
-                                    fontSize = 7.sp,
-                                    lineHeight = 7.7.sp,
-                                    color = AppTheme.colors.white,
-                                    textAlign = TextAlign.Center,
-                                )
-                            )
-                        }
-                    }
                 }
             }
             Text(

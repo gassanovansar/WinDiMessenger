@@ -1,6 +1,7 @@
 package com.example.uikit.designe.toolBar
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,13 +16,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.example.core.ext.clickableRound
 import com.example.uikit.R
 import com.example.uikit.theme.AppTheme
 
 
 @Composable
- fun Toolbar(
+fun Toolbar(
     modifier: Modifier = Modifier,
     startTitle: String? = null,
     title: String? = null,
@@ -82,12 +82,12 @@ import com.example.uikit.theme.AppTheme
 }
 
 @Composable
- fun BackIcon(modifier: Modifier = Modifier, onClick: (() -> Unit)? = null) {
+fun BackIcon(modifier: Modifier = Modifier, onClick: (() -> Unit)? = null) {
     val navigator = LocalNavigator.currentOrThrow
     Image(
         painter = painterResource(id = R.drawable.ic_back),
         contentDescription = null,
-        modifier = modifier.clickableRound(32.dp) {
+        modifier = modifier.clickable {
             if (onClick == null) navigator.pop()
             else onClick()
         }
