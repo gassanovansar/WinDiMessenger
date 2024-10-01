@@ -23,6 +23,8 @@ import com.example.uikit.designe.button.Size
 import com.example.uikit.designe.otpTextFiled.OtpTextField
 import com.example.uikit.screens.PageContainer
 import com.example.uikit.theme.AppTheme
+import com.example.windimessenger.feature.sso.registration.RegistrationScreen
+import com.example.windimessenger.feature.tab.TabScreen
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -36,15 +38,13 @@ class SendSmsScreen(private val phone: String) : Screen {
 
             launch {
                 screenModel.event.collectLatest {
-                    when(it){
+                    when (it) {
                         SendSmsEvent.Auth -> {
-                            println()
-//                        navigator.replace()
+                            navigator.replaceAll(TabScreen())
                         }
 
                         SendSmsEvent.Registration -> {
-                            println()
-//                            navigator.replace()
+                            navigator.replace(RegistrationScreen(phone))
                         }
                     }
                 }

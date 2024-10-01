@@ -8,5 +8,6 @@ val useCaseModule = module {
     factory<CountryUseCase> { CountryUseCase(get()) }
     factory<AuthUseCase> { AuthUseCase(get()) }
     factory<CheckUseCase> { CheckUseCase(get()) }
+    factory<RegistrationUseCase> { RegistrationUseCase(get()) }
 
 }

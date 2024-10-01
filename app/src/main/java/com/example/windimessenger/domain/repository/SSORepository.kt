@@ -6,5 +6,10 @@ import com.example.domain.CheckUI
 
 interface SSORepository {
     suspend fun auth(phone: String): Either<Failure, Boolean>
-    suspend fun check(phone: String,code:String): Either<Failure, CheckUI>
+    suspend fun check(phone: String, code: String): Either<Failure, CheckUI>
+    suspend fun registration(
+        phone: String,
+        name: String,
+        userName: String
+    ): Either<Failure, Unit>
 }

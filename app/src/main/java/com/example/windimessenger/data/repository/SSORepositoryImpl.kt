@@ -5,6 +5,7 @@ import com.example.corekt.Failure
 import com.example.corekt.apiCall
 import com.example.data.request.AuthRequest
 import com.example.data.request.CheckRequest
+import com.example.data.request.RegistrationRequest
 import com.example.domain.CheckUI
 import com.example.managers.SessionManager
 import com.example.windimessenger.data.api.SSOApi
@@ -35,5 +36,20 @@ class SSORepositoryImpl(private val api: SSOApi, private val sessionManager: Ses
             }
         }
         )
+    }
+
+    override suspend fun registration(
+        phone: String,
+        name: String,
+        userName: String
+    ): Either<Failure, Unit> {
+        return apiCall(call = {
+            api.registration(RegistrationRequest(phone = phone, name = name, username = userName))
+        }, mapResponse = {
+            sessionManager.auth(
+                token = it.access_token.orEmpty(),
+                refresh = it.refresh_token.orEmpty()
+            )
+        })
     }
 }
