@@ -34,7 +34,7 @@ internal fun App() {
                     topEndPercent = 8
                 )
             ) {
-                Navigator(RegistrationScreen("124141414141")) {
+                Navigator(SplashScreen()) {
                     CompositionLocalProvider(
                         RootNavigator provides it,
                     ) {

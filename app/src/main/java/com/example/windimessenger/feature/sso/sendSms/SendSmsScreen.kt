@@ -35,7 +35,6 @@ class SendSmsScreen(private val phone: String) : Screen {
         val state by screenModel.state.collectAsState()
         val navigator = LocalNavigator.currentOrThrow
         LaunchedEffect(screenModel) {
-
             launch {
                 screenModel.event.collectLatest {
                     when (it) {
