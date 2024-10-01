@@ -2,7 +2,7 @@ package com.example.windimessenger.feature.auth
 
 import com.example.core.base.BaseScreenModel
 import com.example.domain.CountryUI
-import com.example.windimessenger.domain.CountryUseCase
+import com.example.windimessenger.domain.useCase.CountryUseCase
 import org.koin.core.component.inject
 
 class AuthScreenModel : BaseScreenModel<AuthState, Any>(AuthState.Default) {
