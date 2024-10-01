@@ -9,5 +9,6 @@ val useCaseModule = module {
     factory<AuthUseCase> { AuthUseCase(get()) }
     factory<CheckUseCase> { CheckUseCase(get()) }
     factory<RegistrationUseCase> { RegistrationUseCase(get()) }
+    factory<ProfileUseCase> { ProfileUseCase(get()) }
 
 }
