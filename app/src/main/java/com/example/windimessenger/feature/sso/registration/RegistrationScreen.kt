@@ -31,6 +31,7 @@ class RegistrationScreen(private val phone: String) : Screen {
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 AppTitleTextField(
+                    modifier = Modifier.padding(top = 48.dp),
                     title = "Телефон",
                     value = phone,
                     enabled = false,
