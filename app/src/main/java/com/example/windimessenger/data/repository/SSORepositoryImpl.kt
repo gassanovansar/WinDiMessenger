@@ -6,10 +6,12 @@ import com.example.corekt.apiCall
 import com.example.data.request.AuthRequest
 import com.example.data.request.CheckRequest
 import com.example.domain.CheckUI
+import com.example.managers.SessionManager
 import com.example.windimessenger.data.api.SSOApi
 import com.example.windimessenger.domain.repository.SSORepository
 
-class SSORepositoryImpl(private val api: SSOApi) : SSORepository {
+class SSORepositoryImpl(private val api: SSOApi, private val sessionManager: SessionManager) :
+    SSORepository {
     override suspend fun auth(phone: String): Either<Failure, Boolean> {
         return apiCall(call = {
             api.sendAuth(AuthRequest(phone))
@@ -23,6 +25,10 @@ class SSORepositoryImpl(private val api: SSOApi) : SSORepository {
             api.checkAuth(CheckRequest(phone, code))
         }, mapResponse = {
             if (it.is_user_exists == true) {
+                sessionManager.auth(
+                    token = it.access_token.orEmpty(),
+                    refresh = it.refresh_token.orEmpty()
+                )
                 CheckUI.Auth
             } else {
                 CheckUI.Registration

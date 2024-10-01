@@ -6,6 +6,6 @@ import org.koin.dsl.module
 
 val repositoryModule = module {
     single<CountryRepository> { CountryRepositoryImpl(get()) }
-    single<SSORepository> { SSORepositoryImpl(get()) }
+    single<SSORepository> { SSORepositoryImpl(get(), get()) }
 
 }

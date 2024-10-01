@@ -96,4 +96,5 @@ dependencies {
     implementation(projects.models.mappers)
     implementation(projects.models.data)
     implementation(projects.source)
+    implementation(projects.managers)
 }

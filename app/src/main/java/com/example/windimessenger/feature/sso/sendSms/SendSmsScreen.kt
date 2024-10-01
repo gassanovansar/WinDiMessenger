@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -15,19 +16,43 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.uikit.designe.button.PrimaryButton
 import com.example.uikit.designe.button.Size
 import com.example.uikit.designe.otpTextFiled.OtpTextField
 import com.example.uikit.screens.PageContainer
 import com.example.uikit.theme.AppTheme
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class SendSmsScreen(private val phone: String) : Screen {
     @Composable
     override fun Content() {
-        val viewModel = rememberScreenModel { SendSmsScreenModel() }
-        val state by viewModel.state.collectAsState()
+        val screenModel = rememberScreenModel { SendSmsScreenModel() }
+        val state by screenModel.state.collectAsState()
+        val navigator = LocalNavigator.currentOrThrow
+        LaunchedEffect(screenModel) {
+
+            launch {
+                screenModel.event.collectLatest {
+                    when(it){
+                        SendSmsEvent.Auth -> {
+                            println()
+//                        navigator.replace()
+                        }
+
+                        SendSmsEvent.Registration -> {
+                            println()
+//                            navigator.replace()
+                        }
+                    }
+                }
+            }
+
+        }
         PageContainer(
-            isLoading = viewModel.status.collectAsState(false),
+            isLoading = screenModel.status.collectAsState(false),
             content = {
                 Column {
                     Spacer(modifier = Modifier.size(130.dp))
@@ -50,7 +75,7 @@ class SendSmsScreen(private val phone: String) : Screen {
                             .align(Alignment.CenterHorizontally),
                         otpText = state.otp
                     ) { value, _ ->
-                        viewModel.changeOtp(value)
+                        screenModel.changeOtp(value)
                     }
 
                     PrimaryButton(
@@ -62,7 +87,7 @@ class SendSmsScreen(private val phone: String) : Screen {
                         enabled = state.isValid,
                         text = "Продолжить",
                     ) {
-//                        viewModel.changeIsAuth()
+                        screenModel.check(phone)
                     }
                 }
             })
