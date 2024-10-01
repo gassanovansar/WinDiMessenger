@@ -25,6 +25,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
+import com.example.domain.Notification
+import com.example.uikit.components.NotificationCenter
 import com.example.uikit.theme.AppTheme
 
 
@@ -35,6 +37,7 @@ fun PageContainer(
     brush: Brush? = null,
     fill: Boolean = true,
     isLoading: State<Boolean> = mutableStateOf(false),
+    error: State<Notification?> = mutableStateOf(null),
     header: @Composable (() -> Unit)? = null,
     content: @Composable BoxScope.() -> Unit,
     footer: @Composable (BoxScope.() -> Unit)? = null,
@@ -58,8 +61,6 @@ fun PageContainer(
         }
     }
     Box {
-
-
         Column(
             modifier = modifier
                 .fillMaxWidth()
@@ -97,14 +98,18 @@ fun PageContainer(
 
 
         }
+        NotificationCenter(error.value)
         if (isLoading.value) {
-            CircularProgressIndicator(
+            Box(
                 modifier = Modifier
-                    .align(Alignment.Center)
+                    .fillMaxSize()
                     .background(AppTheme.colors.shadows.copy(alpha = 0.5F))
-
-
-            )
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = AppTheme.colors.white
+                )
+            }
         }
     }
 

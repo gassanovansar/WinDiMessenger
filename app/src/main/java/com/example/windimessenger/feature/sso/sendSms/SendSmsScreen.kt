@@ -21,6 +21,8 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.uikit.designe.button.PrimaryButton
 import com.example.uikit.designe.button.Size
 import com.example.uikit.designe.otpTextFiled.OtpTextField
+import com.example.uikit.designe.toolBar.BackIcon
+import com.example.uikit.designe.toolBar.Toolbar
 import com.example.uikit.screens.PageContainer
 import com.example.uikit.theme.AppTheme
 import com.example.windimessenger.feature.sso.registration.RegistrationScreen
@@ -51,7 +53,11 @@ class SendSmsScreen(private val phone: String) : Screen {
 
         }
         PageContainer(
-            isLoading = screenModel.status.collectAsState(false),
+            isLoading = screenModel.status.collectAsState(),
+            error = screenModel.error.collectAsState(initial = null),
+            header = {
+                Toolbar(leftIcon = { BackIcon() })
+            },
             content = {
                 Column {
                     Spacer(modifier = Modifier.size(130.dp))

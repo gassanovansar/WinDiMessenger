@@ -16,6 +16,7 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.uikit.designe.appTextFiled.AppTitleTextField
 import com.example.uikit.designe.button.PrimaryButton
+import com.example.uikit.designe.toolBar.BackIcon
 import com.example.uikit.designe.toolBar.Toolbar
 import com.example.uikit.screens.PageContainer
 import com.example.windimessenger.feature.tab.TabScreen
@@ -40,49 +41,55 @@ class RegistrationScreen(private val phone: String) : Screen {
             }
 
         }
-        PageContainer(header = {
-            Toolbar(
-                title = "Регистрация"
-            )
-        }, content = {
-            Column(
-                modifier = Modifier.padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                AppTitleTextField(
-                    modifier = Modifier.padding(top = 48.dp),
-                    title = "Телефон",
-                    value = phone,
-                    enabled = false,
+        PageContainer(
+            isLoading = screenModel.status.collectAsState(),
+            error = screenModel.error.collectAsState(initial = null),
+            header = {
+                Toolbar(
+                    leftIcon = {
+                        BackIcon()
+                    },
+                    title = "Регистрация"
+                )
+            }, content = {
+                Column(
+                    modifier = Modifier.padding(horizontal = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
+                    AppTitleTextField(
+                        modifier = Modifier.padding(top = 48.dp),
+                        title = "Телефон",
+                        value = phone,
+                        enabled = false,
+                    ) {
+                    }
+                    AppTitleTextField(
+                        title = "Имя",
+                        value = state.name,
+                        error = state.hasNameError,
+                        errorText = "Введите имя",
+                        hint = "Введите имя",
+                    ) {
+                        screenModel.changeName(it)
+                    }
+                    AppTitleTextField(
+                        title = "E-mail",
+                        value = state.userName,
+                        error = state.hasUserNameError,
+                        errorText = "Вы ввели неверный e-mail",
+                        hint = "Введите e-mail",
+                    ) {
+                        screenModel.changeUserName(it)
+                    }
+                    PrimaryButton(
+                        text = "Зарегестрироватся",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 24.dp)
+                    ) {
+                        screenModel.registration(phone)
+                    }
                 }
-                AppTitleTextField(
-                    title = "Имя",
-                    value = state.name,
-                    error = state.hasNameError,
-                    errorText = "Введите имя",
-                    hint = "Введите имя",
-                ) {
-                    screenModel.changeName(it)
-                }
-                AppTitleTextField(
-                    title = "E-mail",
-                    value = state.userName,
-                    error = state.hasUserNameError,
-                    errorText = "Вы ввели неверный e-mail",
-                    hint = "Введите e-mail",
-                ) {
-                    screenModel.changeUserName(it)
-                }
-                PrimaryButton(
-                    text = "Зарегестрироватся",
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 24.dp)
-                ) {
-                    screenModel.registration(phone)
-                }
-            }
-        })
+            })
     }
 }

@@ -44,7 +44,8 @@ class AuthScreen : Screen {
             }
         }
         PageContainer(
-            isLoading = screenModel.status.collectAsState(false),
+            isLoading = screenModel.status.collectAsState(),
+            error = screenModel.error.collectAsState(null),
             header = {
                 Toolbar(title = "Авторизация")
             }, content = {
