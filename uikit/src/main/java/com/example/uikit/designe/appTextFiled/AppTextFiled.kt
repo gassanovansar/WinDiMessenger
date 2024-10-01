@@ -38,7 +38,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.uikit.theme.AppTheme
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun AppTextField(
     modifier: Modifier = Modifier,
@@ -51,18 +50,15 @@ fun AppTextField(
     value: String,
     enabled: Boolean = true,
     error: Boolean = false,
+    errorText: String? = null,
     password: Boolean = false,
     keyboardType: KeyboardType = KeyboardType.Text,
     left: @Composable (() -> Unit)? = null,
     right: @Composable (() -> Unit)? = null,
     minLines: Int = 1,
     shape: Shape = RoundedCornerShape(8.dp),
-    onClick: () -> Unit = {},
     onValueChange: (String) -> Unit,
 ) {
-    val source = remember {
-        MutableInteractionSource()
-    }
     var passwordState by remember { mutableStateOf(password) }
     var _value by remember { mutableStateOf(value) }
     LaunchedEffect(value) {
@@ -75,10 +71,7 @@ fun AppTextField(
             shape = shape,
             elevation = 0.dp,
             modifier = Modifier
-                .defaultMinSize(minHeight = 40.dp)
-                .clickable {
-                    onClick()
-                },
+                .defaultMinSize(minHeight = 40.dp),
             border = if (error) BorderStroke(1.dp, AppTheme.colors.red) else null,
             backgroundColor = backgroundColor,
         ) {
@@ -86,7 +79,6 @@ fun AppTextField(
                 val keyboardController = LocalSoftwareKeyboardController.current
                 left?.invoke()
                 BasicTextField(
-                    interactionSource = source,
                     enabled = enabled,
                     visualTransformation = if (passwordState) {
                         PasswordVisualTransformation()
@@ -155,10 +147,10 @@ fun AppTextField(
 
             }
         }
-        AnimatedVisibility(visible = error) {
+        AnimatedVisibility(visible = error && !errorText.isNullOrBlank()) {
             Text(
                 modifier = Modifier.padding(top = 8.dp),
-                text = "Вы ввели неверный e-mail",
+                text = errorText!!,
                 style = AppTheme.typography.regular.copy(
                     fontSize = 13.sp,
                     lineHeight = 18.sp,
@@ -167,4 +159,61 @@ fun AppTextField(
             )
         }
     }
+}
+
+@Composable
+fun AppTitleTextField(
+    title: String,
+    modifier: Modifier = Modifier,
+    hint: String = "",
+    backgroundColor: Color = AppTheme.colors.gray2,
+    textColor: Color = AppTheme.colors.white,
+    fill: Boolean = true,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    maxLength: Int? = null,
+    value: String,
+    enabled: Boolean = true,
+    error: Boolean = false,
+    errorText: String? = null,
+    password: Boolean = false,
+    keyboardType: KeyboardType = KeyboardType.Text,
+    left: @Composable (() -> Unit)? = null,
+    right: @Composable (() -> Unit)? = null,
+    minLines: Int = 1,
+    shape: Shape = RoundedCornerShape(8.dp),
+    onValueChange: (String) -> Unit,
+) {
+    Column(modifier) {
+        Text(
+            text = title,
+            style = AppTheme.typography.regular.copy(
+                fontSize = 16.sp,
+                lineHeight = 16.sp,
+                color = AppTheme.colors.white,
+            )
+        )
+        AppTextField(
+            modifier = Modifier.padding(top = 5.dp),
+            hint = hint,
+            backgroundColor = backgroundColor,
+            textColor = textColor,
+            fill = fill,
+            visualTransformation = visualTransformation,
+            maxLength = maxLength,
+            value = value,
+            enabled = enabled,
+            error = error,
+            errorText = errorText,
+            password = password,
+            keyboardType = keyboardType,
+            left = left,
+            right = right,
+            minLines = minLines,
+            shape = shape,
+            onValueChange = onValueChange
+        )
+
+    }
+
+
 }

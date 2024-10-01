@@ -17,6 +17,7 @@ import com.example.uikit.theme.AppTheme
 import com.example.windimessenger.feature.sso.auth.AuthScreen
 import com.example.windimessenger.feature.country.CountryScreen
 import com.example.windimessenger.feature.splash.SplashScreen
+import com.example.windimessenger.feature.sso.registration.RegistrationScreen
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -33,7 +34,7 @@ internal fun App() {
                     topEndPercent = 8
                 )
             ) {
-                Navigator(AuthScreen()) {
+                Navigator(RegistrationScreen("124141414141")) {
                     CompositionLocalProvider(
                         RootNavigator provides it,
                     ) {
