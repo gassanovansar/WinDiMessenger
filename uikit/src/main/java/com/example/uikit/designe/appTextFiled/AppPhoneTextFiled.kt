@@ -44,6 +44,7 @@ fun AppPhoneTextFiled(
     backgroundColor: Color = AppTheme.colors.gray2,
     textColor: Color = AppTheme.colors.white,
     value: String,
+    phoneCode: String,
     error: Boolean = false,
     shape: RoundedCornerShape = RoundedCornerShape(8.dp),
     onClick: () -> Unit = {},
@@ -81,7 +82,7 @@ fun AppPhoneTextFiled(
                                 phoneCodeOnClick()
                             }
                             .padding(4.dp),
-                        text = "+7",
+                        text = phoneCode,
                         style = AppTheme.typography.regular.copy(
                             fontSize = 14.sp,
                             lineHeight = 16.8.sp,

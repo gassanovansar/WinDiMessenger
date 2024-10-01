@@ -1,6 +1,7 @@
 package com.example.windimessenger.feature.country
 
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,29 +14,39 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.bottomSheet.LocalBottomSheetNavigator
+import com.example.domain.CountryUI
 import com.example.uikit.designe.appCard.AppCard
 import com.example.uikit.screens.PageContainer
 import com.example.uikit.theme.AppTheme
 
-class CountryScreen : Screen {
+class CountryScreen(private val onClick: (CountryUI) -> Unit) : Screen {
     @Composable
     override fun Content() {
+        val bottomSheetNavigator = LocalBottomSheetNavigator.current
         PageContainer(fill = false, content = {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = PaddingValues(16.dp)
             ) {
                 items(10) {
-                    CountryItem()
+                    CountryItem() {
+                        onClick(CountryUI.Default)
+                        bottomSheetNavigator.hide()
+                    }
                 }
             }
         })
     }
 
     @Composable
-    private fun CountryItem() {
+    private fun CountryItem(onClick: () -> Unit) {
         AppCard(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    onClick()
+                },
             backgroundColor = AppTheme.colors.gray2,
             border = BorderStroke(width = 1.dp, AppTheme.colors.white)
         ) {
