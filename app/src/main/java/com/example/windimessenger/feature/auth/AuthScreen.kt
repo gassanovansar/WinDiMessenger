@@ -36,12 +36,13 @@ class AuthScreen : Screen {
                     value = state.phone,
                     hint = "XXX XXX XX XX",
                     phoneCode = state.country.code,
+                    phoneLength = state.country.validation,
                     modifier = Modifier
                         .padding(horizontal = 16.dp)
                         .padding(top = 64.dp),
                     phoneCodeOnClick = {
-                        bottomSheetNavigator.show(CountryScreen(){
-                                screenModel.changeCounty(it)
+                        bottomSheetNavigator.show(CountryScreen() {
+                            screenModel.changeCounty(it)
                         })
                     }
                 ) {

@@ -45,6 +45,7 @@ fun AppPhoneTextFiled(
     textColor: Color = AppTheme.colors.white,
     value: String,
     phoneCode: String,
+    phoneLength: Int,
     error: Boolean = false,
     shape: RoundedCornerShape = RoundedCornerShape(8.dp),
     onClick: () -> Unit = {},
@@ -108,7 +109,7 @@ fun AppPhoneTextFiled(
                     value = _value,
                     onValueChange = {
 
-                        if (it.length <= 10) {
+                        if (it.length <= phoneLength) {
                             onValueChange(it)
                             _value = it
                         }

@@ -20,6 +20,6 @@ class AuthScreenModel : BaseScreenModel<AuthState, Any>(AuthState.Default) {
     }
 
     fun changeCounty(value: CountryUI) {
-        setState { state.value.copy(country = value) }
+        setState { state.value.copy(country = value, phone = "") }
     }
 }

@@ -5,10 +5,10 @@ import com.example.domain.CountryUI
 
 data class AuthState(
     val phone: String,
-    val country: CountryUI,
+    val country: CountryUI
 ) {
 
-    val isValid = phone.length == 10
+    val isValid = phone.length == country.validation
 
     companion object {
         val Default = AuthState(phone = "", country = CountryUI.Default)

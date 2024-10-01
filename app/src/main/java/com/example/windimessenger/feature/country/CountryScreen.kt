@@ -7,12 +7,17 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.bottomSheet.LocalBottomSheetNavigator
 import com.example.domain.CountryUI
@@ -23,15 +28,20 @@ import com.example.uikit.theme.AppTheme
 class CountryScreen(private val onClick: (CountryUI) -> Unit) : Screen {
     @Composable
     override fun Content() {
+        val screenModel = rememberScreenModel { CountryScreenModel() }
+        val state by screenModel.state.collectAsState()
         val bottomSheetNavigator = LocalBottomSheetNavigator.current
+        LaunchedEffect(screenModel) {
+            screenModel.loadCountry()
+        }
         PageContainer(fill = false, content = {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = PaddingValues(16.dp)
             ) {
-                items(10) {
-                    CountryItem() {
-                        onClick(CountryUI.Default)
+                items(state.country) {
+                    CountryItem(it) {
+                        onClick(it)
                         bottomSheetNavigator.hide()
                     }
                 }
@@ -40,7 +50,7 @@ class CountryScreen(private val onClick: (CountryUI) -> Unit) : Screen {
     }
 
     @Composable
-    private fun CountryItem(onClick: () -> Unit) {
+    private fun CountryItem(item: CountryUI, onClick: () -> Unit) {
         AppCard(
             modifier = Modifier
                 .fillMaxWidth()
@@ -51,7 +61,7 @@ class CountryScreen(private val onClick: (CountryUI) -> Unit) : Screen {
             border = BorderStroke(width = 1.dp, AppTheme.colors.white)
         ) {
             Text(
-                text = "Казахстан", modifier = Modifier
+                text = item.title, modifier = Modifier
                     .align(Alignment.Center)
                     .padding(16.dp),
                 style = AppTheme.typography.regular.copy(
