@@ -1,4 +1,4 @@
-package com.example.windimessenger.feature.auth
+package com.example.windimessenger.feature.sso.auth
 
 import com.example.domain.CountryUI
 

@@ -14,7 +14,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.bottomSheet.BottomSheetNavigator
 import com.example.core.RootNavigator
 import com.example.uikit.theme.AppTheme
-import com.example.windimessenger.feature.auth.AuthScreen
+import com.example.windimessenger.feature.sso.auth.AuthScreen
 import com.example.windimessenger.feature.country.CountryScreen
 import com.example.windimessenger.feature.splash.SplashScreen
 
