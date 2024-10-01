@@ -1,6 +1,6 @@
 package com.example.source
 
-import com.example.data.CountryResponse
+import com.example.data.response.CountryResponse
 
 class LocalSource() {
 

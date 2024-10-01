@@ -1,4 +1,4 @@
-package com.example.data
+package com.example.data.response
 
 class CountryResponse(
     val title: String?,

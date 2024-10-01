@@ -17,6 +17,8 @@ import com.example.uikit.designe.button.PrimaryButton
 import com.example.uikit.designe.toolBar.Toolbar
 import com.example.uikit.screens.PageContainer
 import com.example.windimessenger.feature.country.CountryScreen
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class AuthScreen : Screen {
     @Composable
@@ -26,6 +28,16 @@ class AuthScreen : Screen {
         val state by screenModel.state.collectAsState()
         LaunchedEffect(screenModel) {
             screenModel.loadCountry()
+
+            launch {
+                screenModel.event.collectLatest {
+                    when (it) {
+                        AuthEvent.Success -> {
+                            println()
+                        }
+                    }
+                }
+            }
         }
         PageContainer(header = {
             Toolbar(title = "Авторизация")
@@ -56,6 +68,7 @@ class AuthScreen : Screen {
                         .padding(horizontal = 16.dp)
                         .padding(top = 24.dp)
                 ) {
+                    screenModel.auth()
                 }
             }
 
