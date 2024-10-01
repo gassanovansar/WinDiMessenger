@@ -47,6 +47,7 @@ fun AppPhoneTextFiled(
     error: Boolean = false,
     shape: RoundedCornerShape = RoundedCornerShape(8.dp),
     onClick: () -> Unit = {},
+    phoneCodeOnClick: () -> Unit = {},
     onValueChange: (String) -> Unit,
 ) {
     val source = remember {
@@ -77,7 +78,7 @@ fun AppPhoneTextFiled(
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .clickable {
-
+                                phoneCodeOnClick()
                             }
                             .padding(4.dp),
                         text = "+7",
@@ -106,7 +107,7 @@ fun AppPhoneTextFiled(
                     value = _value,
                     onValueChange = {
 
-                        if (it.length <= 11) {
+                        if (it.length <= 10) {
                             onValueChange(it)
                             _value = it
                         }
