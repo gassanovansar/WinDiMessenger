@@ -34,7 +34,8 @@ class CountryScreen(private val onClick: (CountryUI) -> Unit) : Screen {
         LaunchedEffect(screenModel) {
             screenModel.loadCountry()
         }
-        PageContainer(fill = false, content = {
+        PageContainer(
+            fill = false, content = {
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(16.dp),
                 contentPadding = PaddingValues(16.dp)

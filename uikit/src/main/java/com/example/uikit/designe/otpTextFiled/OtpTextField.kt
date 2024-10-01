@@ -27,7 +27,7 @@ import com.example.uikit.theme.AppTheme
 fun OtpTextField(
     modifier: Modifier = Modifier,
     otpText: String,
-    otpCount: Int = 4,
+    otpCount: Int = 6,
     isError: Boolean = false,
     onOtpTextChange: (String, Boolean) -> Unit
 ) {

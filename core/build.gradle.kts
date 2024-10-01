@@ -64,5 +64,10 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android)
 
+
+    /**
+     * modules
+     */
     implementation(projects.corekt)
+    implementation(projects.models.domain)
 }

@@ -57,4 +57,9 @@ dependencies {
     implementation(libs.voyager.tabNavigator)
     implementation(libs.voyager.screenModel)
 
+
+    /**
+     * Modules
+     */
+    implementation(projects.models.domain)
 }

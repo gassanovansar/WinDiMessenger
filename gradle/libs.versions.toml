@@ -14,6 +14,7 @@ appcompat = "1.7.0"
 material = "1.12.0"
 kotlinx-coroutines = "1.7.3"
 retrofit2 = "2.9.0"
+serialization = "1.6.1"
 
 
 [libraries]
@@ -50,6 +51,7 @@ material = { group = "com.google.android.material", name = "material", version.r
 
 #coroutines
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "serialization" }
 
 
 

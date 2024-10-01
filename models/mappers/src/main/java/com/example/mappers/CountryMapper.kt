@@ -1,6 +1,6 @@
 package com.example.mappers
 
-import com.example.data.CountryResponse
+import com.example.data.response.CountryResponse
 import com.example.domain.CountryUI
 
 fun CountryResponse.toUI(): CountryUI {

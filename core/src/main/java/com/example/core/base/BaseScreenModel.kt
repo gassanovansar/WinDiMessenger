@@ -4,12 +4,18 @@ import cafe.adriel.voyager.core.model.ScreenModel
 import cafe.adriel.voyager.core.model.screenModelScope
 import com.example.corekt.Either
 import com.example.corekt.Failure
+import com.example.domain.Loading
+import com.example.domain.Notification
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -27,7 +33,10 @@ abstract class BaseScreenModel<State : Any, Event : Any>(initState: State) : Scr
     val event = _event.receiveAsFlow()
 
     private val _status = MutableStateFlow(false)
-    val status = _status.asStateFlow()
+    val status = _status
+
+    private val _error = Channel<Notification?>(Channel.BUFFERED)
+    val error = _error.receiveAsFlow()
 
 
     protected fun setState(state: () -> State) {
@@ -46,6 +55,13 @@ abstract class BaseScreenModel<State : Any, Event : Any>(initState: State) : Scr
         }
     }
 
+    protected fun setError(error: Notification) {
+        screenModelScope.launch {
+            _status.emit(false)
+            _error.send(error)
+        }
+    }
+
     /**
      * Выполнить запросы
      * @param operation - описываем запрос
@@ -58,14 +74,20 @@ abstract class BaseScreenModel<State : Any, Event : Any>(initState: State) : Scr
         loading: (Boolean) -> Unit = { setStatus(it) },
         failure: (Failure) -> Unit = {},
         success: (T) -> Unit = {}
-    ) {
-        loading.invoke(true)
-        screenModelScope.launch {
+    ): Job {
+        return screenModelScope.launch(handler) {
+            loading.invoke(true)
             withContext(ioScope.coroutineContext) {
                 operation(this)
             }.fold(failure, success)
+            loading.invoke(false)
         }
-        loading.invoke(false)
+    }
+
+    protected val handler = CoroutineExceptionHandler { _, exception ->
+        println(exception)
+        setError(Notification(exception.message ?: "Неизвестная ошибка"))
+
     }
 
 }
