@@ -11,12 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.bottomSheet.LocalBottomSheetNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.uikit.designe.appTextFiled.AppPhoneTextFiled
 import com.example.uikit.designe.button.PrimaryButton
 import com.example.uikit.designe.toolBar.Toolbar
 import com.example.uikit.screens.PageContainer
 import com.example.windimessenger.feature.country.CountryScreen
+import com.example.windimessenger.feature.sso.sendSms.SendSmsScreen
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -24,6 +27,7 @@ class AuthScreen : Screen {
     @Composable
     override fun Content() {
         val bottomSheetNavigator = LocalBottomSheetNavigator.current
+        val navigator = LocalNavigator.currentOrThrow
         val screenModel = rememberScreenModel { AuthScreenModel() }
         val state by screenModel.state.collectAsState()
         LaunchedEffect(screenModel) {
@@ -33,46 +37,48 @@ class AuthScreen : Screen {
                 screenModel.event.collectLatest {
                     when (it) {
                         AuthEvent.Success -> {
-                            println()
+                            navigator.push(SendSmsScreen("${state.country.code}${state.phone}"))
                         }
                     }
                 }
             }
         }
-        PageContainer(header = {
-            Toolbar(title = "Авторизация")
-        }, content = {
+        PageContainer(
+            isLoading = screenModel.status.collectAsState(false),
+            header = {
+                Toolbar(title = "Авторизация")
+            }, content = {
 
-            Column {
-                AppPhoneTextFiled(
-                    value = state.phone,
-                    hint = "XXX XXX XX XX",
-                    phoneCode = state.country.code,
-                    phoneLength = state.country.validation,
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 64.dp),
-                    phoneCodeOnClick = {
-                        bottomSheetNavigator.show(CountryScreen() {
-                            screenModel.changeCounty(it)
-                        })
+                Column {
+                    AppPhoneTextFiled(
+                        value = state.phone,
+                        hint = "XXX XXX XX XX",
+                        phoneCode = state.country.code,
+                        phoneLength = state.country.validation,
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 64.dp),
+                        phoneCodeOnClick = {
+                            bottomSheetNavigator.show(CountryScreen() {
+                                screenModel.changeCounty(it)
+                            })
+                        }
+                    ) {
+                        screenModel.changePhone(it)
                     }
-                ) {
-                    screenModel.changePhone(it)
+                    PrimaryButton(
+                        text = "Вход",
+                        enabled = state.isValid,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                            .padding(top = 24.dp)
+                    ) {
+                        screenModel.auth()
+                    }
                 }
-                PrimaryButton(
-                    text = "Вход",
-                    enabled = state.isValid,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
-                        .padding(top = 24.dp)
-                ) {
-                    screenModel.auth()
-                }
-            }
 
-        })
+            })
 
     }
 }
