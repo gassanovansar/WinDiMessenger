@@ -5,6 +5,6 @@ import com.example.windimessenger.domain.repository.CountryRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<CountryRepository> { CountryRepositoryImpl() }
+    single<CountryRepository> { CountryRepositoryImpl(get()) }
 
 }
