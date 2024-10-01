@@ -91,4 +91,9 @@ dependencies {
      */
     implementation(projects.uikit)
     implementation(projects.core)
+    implementation(projects.corekt)
+    implementation(projects.models.domain)
+    implementation(projects.models.mappers)
+    implementation(projects.models.data)
+    implementation(projects.source)
 }

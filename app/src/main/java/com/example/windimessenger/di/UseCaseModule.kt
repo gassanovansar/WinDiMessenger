@@ -1,8 +1,10 @@
 package com.example.windimessenger.di
+
+import com.example.windimessenger.domain.useCase.CountryUseCase
 import org.koin.dsl.module
 
 val useCaseModule = module {
 
-//    factory<UseCase> { UseCase(get()) }
+    factory<CountryUseCase> { CountryUseCase(get()) }
 
 }
