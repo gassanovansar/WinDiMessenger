@@ -67,6 +67,8 @@ class EditProfileScreen : Screen {
                     "Имя",
                     value = state.name,
                     hint = "Введите имя",
+                    error = state.hasNameError,
+                    errorText = "Введите имя",
                     modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
                     screenModel.changeName(it)
@@ -75,6 +77,8 @@ class EditProfileScreen : Screen {
                     "E-mail",
                     value = state.username,
                     hint = "Введите E-mail",
+                    error = state.hasUsernameError,
+                    errorText = "Вы ввели неверный e-mail",
                     modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
                     screenModel.changeEmail(it)
@@ -82,6 +86,8 @@ class EditProfileScreen : Screen {
                 ProfileItem(
                     "Дата рождения",
                     value = state.birthday?.toDateIntUI() ?: "",
+                    error = state.hasBirthdayError,
+                    errorText = "Выберите дату рождения",
                     hint = "Выберите дату рождения",
                 ) {
                     bottomSheetNavigator.show(DatePickerScreen(null) {
@@ -92,6 +98,8 @@ class EditProfileScreen : Screen {
                 ProfileItem(
                     "Город",
                     value = state.city,
+                    error = state.hasCityError,
+                    errorText = "Выберите город",
                     hint = "Выберите город"
                 ) {
                     bottomSheetNavigator.show(CountryScreen() {
@@ -101,7 +109,9 @@ class EditProfileScreen : Screen {
                 AppTitleTextField(
                     "ВКонтакте",
                     value = state.vk,
-                    hint = "Ввелите аккаунт",
+                    hint = "Введите аккаунт",
+                    error = state.hasVkError,
+                    errorText = "Необходимо заполнить поле",
                     modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
                     screenModel.changeVK(it)
@@ -109,7 +119,9 @@ class EditProfileScreen : Screen {
                 AppTitleTextField(
                     "Инстаграм",
                     value = state.instagram,
-                    hint = "Ввелите аккаунт",
+                    hint = "Введите аккаунт",
+                    error = state.hasInstagramError,
+                    errorText = "Необходимо заполнить поле",
                     modifier = Modifier.padding(horizontal = 16.dp)
                 ) {
                     screenModel.changeInstagram(it)
@@ -125,7 +137,7 @@ class EditProfileScreen : Screen {
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
-
+                    screenModel.editProfile()
                 }
             }
         })

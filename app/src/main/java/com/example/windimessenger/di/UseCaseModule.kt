@@ -10,5 +10,6 @@ val useCaseModule = module {
     factory<CheckUseCase> { CheckUseCase(get()) }
     factory<RegistrationUseCase> { RegistrationUseCase(get()) }
     factory<ProfileUseCase> { ProfileUseCase(get()) }
+    factory<EditProfileUseCase> { EditProfileUseCase(get()) }
 
 }

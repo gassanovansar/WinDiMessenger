@@ -1,5 +1,7 @@
 package com.example.windimessenger.feature.tab.profile
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -114,6 +116,8 @@ fun ProfileItem(
     title: String,
     value: String,
     hint: String = "Не известно",
+    error: Boolean = false,
+    errorText: String = "",
     onClick: (() -> Unit)? = null
 ) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
@@ -126,6 +130,7 @@ fun ProfileItem(
             )
         )
         AppCard(
+            border = if (error) BorderStroke(1.dp, AppTheme.colors.red) else null,
             backgroundColor = AppTheme.colors.gray2,
             modifier = Modifier
                 .defaultMinSize(minHeight = 48.dp)
@@ -144,6 +149,17 @@ fun ProfileItem(
                     fontSize = 14.sp,
                     lineHeight = 16.8.sp,
                     color = if (value.isNotBlank()) AppTheme.colors.white else AppTheme.colors.gray4
+                )
+            )
+        }
+        AnimatedVisibility(visible = error && !errorText.isNullOrBlank()) {
+            Text(
+                modifier = Modifier.padding(top = 8.dp),
+                text = errorText!!,
+                style = AppTheme.typography.regular.copy(
+                    fontSize = 13.sp,
+                    lineHeight = 18.sp,
+                    color = AppTheme.colors.red,
                 )
             )
         }
