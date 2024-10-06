@@ -12,7 +12,7 @@ class ProfileScreenModel : BaseScreenModel<ProfileState, Any>(ProfileState.Defau
         launchOperation(operation = { scope ->
             profileUseCase(scope, ProfileUseCase.Params())
         }, success = {
-            println(it)
+            setState { state.value.copy(profile = it) }
         })
     }
 }

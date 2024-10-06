@@ -2,7 +2,6 @@ package com.example.windimessenger.di
 
 import com.example.managers.SessionManager
 import okhttp3.OkHttpClient
-import okhttp3.Request
 import org.koin.core.module.dsl.factoryOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -15,7 +14,7 @@ val networkModule = module {
 
 
 fun createRetrofit(
-    sessionManager: SessionManager
+    sessionManager: SessionManager,
 ): Retrofit {
 
     return Retrofit.Builder().baseUrl("https://plannerok.ru/")

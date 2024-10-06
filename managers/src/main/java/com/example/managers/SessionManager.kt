@@ -10,6 +10,7 @@ interface SessionManager {
     fun auth(token: String, refresh: String)
 
     val token: String
+    val refreshToken: String
 }
 
 
@@ -25,7 +26,9 @@ class SessionManagerImpl(private val sharedPreference: SharedPreferences) : Sess
     }
 
     override val token: String
-        get() = sharedPreference.getString(TOKEN, "")?:""
+        get() = sharedPreference.getString(TOKEN, "") ?: ""
+    override val refreshToken: String
+        get() = sharedPreference.getString(REFRESH, "") ?: ""
 
     companion object {
         private const val BASE = "SessionManager"

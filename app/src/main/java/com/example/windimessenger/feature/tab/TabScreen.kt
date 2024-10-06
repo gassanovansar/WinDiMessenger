@@ -31,7 +31,7 @@ import com.example.uikit.designe.appCard.AppCard
 import com.example.uikit.screens.PageContainer
 import com.example.uikit.theme.AppTheme
 
-class TabScreen(private val tab: Tab = MainTabScreen) : Screen {
+class TabScreen(private val tab: Tab = ProfileTabScreen) : Screen {
 
     @Composable
     override fun Content() {
