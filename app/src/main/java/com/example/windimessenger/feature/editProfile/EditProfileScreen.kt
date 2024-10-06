@@ -24,6 +24,8 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.example.uikit.designe.appCard.AppCard
 import com.example.uikit.designe.appTextFiled.AppTitleTextField
 import com.example.uikit.designe.button.PrimaryButton
+import com.example.uikit.designe.toolBar.BackIcon
+import com.example.uikit.designe.toolBar.Toolbar
 import com.example.uikit.screens.PageContainer
 import com.example.uikit.theme.AppTheme
 import com.example.windimessenger.App
@@ -40,7 +42,9 @@ class EditProfileScreen : Screen {
             screenModel.loadProfile()
         }
 
-        PageContainer(background = AppTheme.colors.black, content = {
+        PageContainer(background = AppTheme.colors.black, header = {
+            Toolbar(leftIcon = { BackIcon() }, title = "Редакьтровать профиль")
+        }, content = {
 
             Column(
                 modifier = Modifier

@@ -1,5 +1,6 @@
 package com.example.windimessenger.feature.tab.profile
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.defaultMinSize
@@ -31,6 +32,9 @@ import com.example.uikit.screens.PageContainer
 import com.example.uikit.theme.AppTheme
 import com.example.windimessenger.App
 import com.example.windimessenger.feature.editProfile.EditProfileScreen
+import com.example.windimessenger.feature.sso.auth.AuthScreen
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class ProfileScreen : Screen {
     @Composable
@@ -41,6 +45,13 @@ class ProfileScreen : Screen {
 
         LaunchedEffect(screenModel) {
             screenModel.loadProfile()
+            launch {
+                screenModel.event.collectLatest {
+                    when (it) {
+                        ProfileEvent.Exit -> navigator.replaceAll(AuthScreen())
+                    }
+                }
+            }
         }
 
         PageContainer(background = AppTheme.colors.shadows, content = {
@@ -52,9 +63,23 @@ class ProfileScreen : Screen {
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
 
+                Text(
+                    modifier = Modifier
+                        .align(Alignment.End)
+                        .padding(vertical = 8.dp, horizontal = 4.dp)
+                        .clickable {
+                            screenModel.exit()
+                        },
+                    text = "Выйти из аккаунта", style = AppTheme.typography.regular.copy(
+                        fontSize = 16.sp,
+                        lineHeight = 16.sp,
+                        color = AppTheme.colors.white,
+                    )
+                )
+
                 AppCard(
                     modifier = Modifier
-                        .padding(top = 32.dp)
+                        .padding(top = 16.dp)
                         .align(Alignment.CenterHorizontally)
                         .size(86.dp),
                     shape = CircleShape
