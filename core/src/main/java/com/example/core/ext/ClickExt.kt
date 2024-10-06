@@ -16,10 +16,11 @@ import kotlinx.coroutines.delay
 
 fun Modifier.clickableRound(
     radius: Dp,
+    enabled: Boolean = true,
     onClick: () -> Unit
 ): Modifier {
     return clip(RoundedCornerShape(radius))
-        .clickable {
+        .clickable(enabled = enabled) {
             onClick()
         }
 }

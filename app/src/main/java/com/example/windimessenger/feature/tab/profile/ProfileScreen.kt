@@ -22,15 +22,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
-import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.example.core.RootNavigator
+import com.example.core.ext.clickableRound
 import com.example.uikit.designe.appCard.AppCard
-import com.example.uikit.designe.appTextFiled.AppTitleTextField
 import com.example.uikit.designe.button.PrimaryButton
 import com.example.uikit.screens.PageContainer
 import com.example.uikit.theme.AppTheme
-import com.example.windimessenger.App
 import com.example.windimessenger.feature.editProfile.EditProfileScreen
 import com.example.windimessenger.feature.sso.auth.AuthScreen
 import kotlinx.coroutines.flow.collectLatest
@@ -112,7 +110,12 @@ class ProfileScreen : Screen {
 }
 
 @Composable
-fun ProfileItem(title: String, value: String, hint: String = "Не известно") {
+fun ProfileItem(
+    title: String,
+    value: String,
+    hint: String = "Не известно",
+    onClick: (() -> Unit)? = null
+) {
     Column(modifier = Modifier.padding(horizontal = 16.dp)) {
         Text(
             text = title,
@@ -127,6 +130,9 @@ fun ProfileItem(title: String, value: String, hint: String = "Не извест�
             modifier = Modifier
                 .defaultMinSize(minHeight = 48.dp)
                 .fillMaxWidth()
+                .clickableRound(8.dp, onClick != null) {
+                    onClick?.invoke()
+                }
                 .padding(top = 5.dp)
         ) {
             Text(

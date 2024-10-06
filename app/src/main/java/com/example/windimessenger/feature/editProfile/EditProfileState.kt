@@ -5,7 +5,7 @@ import com.example.domain.ProfileUI
 data class EditProfileState(
     val name: String,
     val username: String,
-    val birthday: String,
+    val birthday: Long?,
     val city: String,
     val vk: String,
     val instagram: String
@@ -15,7 +15,7 @@ data class EditProfileState(
         val Default = EditProfileState(
             name = "",
             username = "",
-            birthday = "",
+            birthday = null,
             city = "",
             vk = "",
             instagram = ""
