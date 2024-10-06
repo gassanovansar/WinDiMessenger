@@ -20,6 +20,7 @@ class EditProfileScreenModel : BaseScreenModel<EditProfileState, Any>(EditProfil
         }, success = {
             setState {
                 state.value.copy(
+                    ava = it.avatar,
                     name = it.name,
                     hasNameError = false,
                     username = it.username,
@@ -58,6 +59,10 @@ class EditProfileScreenModel : BaseScreenModel<EditProfileState, Any>(EditProfil
 
     fun changeInstagram(value: String) {
         setState { state.value.copy(instagram = value, hasInstagramError = false) }
+    }
+
+    fun changePhoto(value: String) {
+        setState { state.value.copy(ava = value) }
     }
 
     fun editProfile() {

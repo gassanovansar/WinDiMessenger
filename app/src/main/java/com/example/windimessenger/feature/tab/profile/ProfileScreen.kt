@@ -81,7 +81,7 @@ class ProfileScreen : Screen {
                     modifier = Modifier
                         .padding(top = 16.dp)
                         .align(Alignment.CenterHorizontally)
-                        .size(86.dp),
+                        .size(100.dp),
                     shape = CircleShape
                 ) {
                 }

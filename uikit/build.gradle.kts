@@ -62,8 +62,10 @@ dependencies {
      * Date
      */
     implementation(libs.kotlinx.datetime)
-
-
+    /**
+     * Coil
+     */
+    implementation(libs.coil3)
 
 
     /**

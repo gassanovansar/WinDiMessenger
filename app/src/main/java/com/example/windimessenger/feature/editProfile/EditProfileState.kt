@@ -4,6 +4,7 @@ import com.example.core.ext.isEmail
 
 
 data class EditProfileState(
+    val ava: String,
     val name: String,
     val hasNameError: Boolean,
     val username: String,
@@ -22,6 +23,7 @@ data class EditProfileState(
 
     companion object {
         val Default = EditProfileState(
+            ava = "",
             name = "",
             hasNameError = false,
             username = "",
