@@ -14,4 +14,20 @@ class ProfileUI(
     val phone: String,
     val completedTask: Int,
 ) {
+    companion object {
+        val Default = ProfileUI(
+            name = "",
+            username = "",
+            birthday = "",
+            city = "",
+            vk = "",
+            instagram = "",
+            status = "",
+            avatar = "",
+            id = "",
+            online = false,
+            phone = "",
+            completedTask = 0
+        )
+    }
 }

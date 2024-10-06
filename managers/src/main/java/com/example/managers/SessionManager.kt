@@ -8,6 +8,8 @@ interface SessionManager {
     val isAuth: Boolean
 
     fun auth(token: String, refresh: String)
+
+    val token: String
 }
 
 
@@ -21,6 +23,9 @@ class SessionManagerImpl(private val sharedPreference: SharedPreferences) : Sess
             putString(REFRESH, refresh).commit()
         }
     }
+
+    override val token: String
+        get() = sharedPreference.getString(TOKEN, "")?:""
 
     companion object {
         private const val BASE = "SessionManager"
