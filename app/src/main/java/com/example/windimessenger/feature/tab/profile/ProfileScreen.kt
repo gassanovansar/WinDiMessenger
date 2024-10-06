@@ -54,7 +54,10 @@ class ProfileScreen : Screen {
             }
         }
 
-        PageContainer(background = AppTheme.colors.shadows, content = {
+        PageContainer(
+            isLoading = screenModel.status.collectAsState(),
+            error = screenModel.error.collectAsState(null),
+            background = AppTheme.colors.shadows, content = {
 
             Column(
                 modifier = Modifier
@@ -103,7 +106,10 @@ class ProfileScreen : Screen {
                         .fillMaxWidth()
                         .padding(16.dp)
                 ) {
-                    navigator.push(EditProfileScreen())
+                    navigator.push(EditProfileScreen {
+                        navigator.pop()
+                        screenModel.loadProfile()
+                    })
                 }
             }
         })

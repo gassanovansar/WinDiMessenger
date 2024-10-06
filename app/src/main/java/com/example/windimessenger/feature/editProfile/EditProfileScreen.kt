@@ -41,10 +41,11 @@ import com.example.windimessenger.feature.chooseMedia.ChooseMediaScreen
 import com.example.windimessenger.feature.chooseMedia.photoSelectEvent
 import com.example.windimessenger.feature.country.CountryScreen
 import com.example.windimessenger.feature.tab.profile.ProfileItem
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-class EditProfileScreen : Screen {
+class EditProfileScreen(private val success: () -> Unit) : Screen {
 
     companion object {
         private const val PHOTO = "PHOTO"
@@ -60,6 +61,13 @@ class EditProfileScreen : Screen {
 
         LaunchedEffect(screenModel) {
             screenModel.loadProfile()
+            launch {
+                screenModel.event.collectLatest {
+                    success()
+                }
+            }
+
+
 
             launch {
                 photoSelectEvent.receiveAsFlow().collect {
@@ -75,123 +83,126 @@ class EditProfileScreen : Screen {
             }
         }
 
-        PageContainer(background = AppTheme.colors.black, header = {
-            Toolbar(leftIcon = { BackIcon() }, title = "Редакьтровать профиль")
-        }, content = {
+        PageContainer(
+            isLoading = screenModel.status.collectAsState(),
+            error = screenModel.error.collectAsState(null),
+            background = AppTheme.colors.black, header = {
+                Toolbar(leftIcon = { BackIcon() }, title = "Редакьтровать профиль")
+            }, content = {
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-            ) {
-
-                Box(
-                    Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(top = 32.dp)
-                ) {
-                    AppImage(
-                        url = state.ava.ifBlank { state.ava.ifBlank { "https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE=" } },
-                        modifier = Modifier
-                            .size(100.dp)
-                            .clip(RoundedCornerShape(100.dp))
-                            .clickable {
-                                bottomSheetNavigator.show(ChooseMediaScreen(PHOTO))
-                            },
-                        contentScale = ContentScale.Crop,
-                        contentDescription = null,
-                    )
-                    Image(
-                        modifier = Modifier
-                            .align(Alignment.BottomEnd)
-                            .clickable {
-                                bottomSheetNavigator.show(ChooseMediaScreen(PHOTO))
-                            },
-                        painter = painterResource(id = R.drawable.ic_pen),
-                        contentDescription = null
-                    )
-                }
-
-
-                AppTitleTextField(
-                    "Имя",
-                    value = state.name,
-                    hint = "Введите имя",
-                    error = state.hasNameError,
-                    errorText = "Введите имя",
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                ) {
-                    screenModel.changeName(it)
-                }
-                AppTitleTextField(
-                    "E-mail",
-                    value = state.username,
-                    hint = "Введите E-mail",
-                    error = state.hasUsernameError,
-                    errorText = "Вы ввели неверный e-mail",
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                ) {
-                    screenModel.changeEmail(it)
-                }
-                ProfileItem(
-                    "Дата рождения",
-                    value = state.birthday?.toDateIntUI() ?: "",
-                    error = state.hasBirthdayError,
-                    errorText = "Выберите дату рождения",
-                    hint = "Выберите дату рождения",
-                ) {
-                    bottomSheetNavigator.show(DatePickerScreen(null) {
-                        screenModel.changeBirthday(it)
-                    })
-
-                }
-                ProfileItem(
-                    "Город",
-                    value = state.city,
-                    error = state.hasCityError,
-                    errorText = "Выберите город",
-                    hint = "Выберите город"
-                ) {
-                    bottomSheetNavigator.show(CountryScreen() {
-                        screenModel.changeCity(it)
-                    })
-                }
-                AppTitleTextField(
-                    "ВКонтакте",
-                    value = state.vk,
-                    hint = "Введите аккаунт",
-                    error = state.hasVkError,
-                    errorText = "Необходимо заполнить поле",
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                ) {
-                    screenModel.changeVK(it)
-                }
-                AppTitleTextField(
-                    "Инстаграм",
-                    value = state.instagram,
-                    hint = "Введите аккаунт",
-                    error = state.hasInstagramError,
-                    errorText = "Необходимо заполнить поле",
-                    modifier = Modifier.padding(horizontal = 16.dp)
-                ) {
-                    screenModel.changeInstagram(it)
-                }
-
-            }
-
-        }, footer = {
-            Column {
-                PrimaryButton(
-                    text = "Редактировать профиль",
+                Column(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
+                        .fillMaxSize()
+                        .verticalScroll(rememberScrollState()),
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
-                    screenModel.editProfile()
+
+                    Box(
+                        Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(top = 32.dp)
+                    ) {
+                        AppImage(
+                            url = state.ava.ifBlank { state.ava.ifBlank { "https://media.istockphoto.com/id/1222357475/vector/image-preview-icon-picture-placeholder-for-website-or-ui-ux-design-vector-illustration.jpg?s=612x612&w=0&k=20&c=KuCo-dRBYV7nz2gbk4J9w1WtTAgpTdznHu55W9FjimE=" } },
+                            modifier = Modifier
+                                .size(100.dp)
+                                .clip(RoundedCornerShape(100.dp))
+                                .clickable {
+                                    bottomSheetNavigator.show(ChooseMediaScreen(PHOTO))
+                                },
+                            contentScale = ContentScale.Crop,
+                            contentDescription = null,
+                        )
+                        Image(
+                            modifier = Modifier
+                                .align(Alignment.BottomEnd)
+                                .clickable {
+                                    bottomSheetNavigator.show(ChooseMediaScreen(PHOTO))
+                                },
+                            painter = painterResource(id = R.drawable.ic_pen),
+                            contentDescription = null
+                        )
+                    }
+
+
+                    AppTitleTextField(
+                        "Имя",
+                        value = state.name,
+                        hint = "Введите имя",
+                        error = state.hasNameError,
+                        errorText = "Введите имя",
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        screenModel.changeName(it)
+                    }
+                    AppTitleTextField(
+                        "E-mail",
+                        value = state.username,
+                        hint = "Введите E-mail",
+                        error = state.hasUsernameError,
+                        errorText = "Вы ввели неверный e-mail",
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        screenModel.changeEmail(it)
+                    }
+                    ProfileItem(
+                        "Дата рождения",
+                        value = state.birthday?.toDateIntUI() ?: "",
+                        error = state.hasBirthdayError,
+                        errorText = "Выберите дату рождения",
+                        hint = "Выберите дату рождения",
+                    ) {
+                        bottomSheetNavigator.show(DatePickerScreen(null) {
+                            screenModel.changeBirthday(it)
+                        })
+
+                    }
+                    ProfileItem(
+                        "Город",
+                        value = state.city,
+                        error = state.hasCityError,
+                        errorText = "Выберите город",
+                        hint = "Выберите город"
+                    ) {
+                        bottomSheetNavigator.show(CountryScreen() {
+                            screenModel.changeCity(it)
+                        })
+                    }
+                    AppTitleTextField(
+                        "ВКонтакте",
+                        value = state.vk,
+                        hint = "Введите аккаунт",
+                        error = state.hasVkError,
+                        errorText = "Необходимо заполнить поле",
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        screenModel.changeVK(it)
+                    }
+                    AppTitleTextField(
+                        "Инстаграм",
+                        value = state.instagram,
+                        hint = "Введите аккаунт",
+                        error = state.hasInstagramError,
+                        errorText = "Необходимо заполнить поле",
+                        modifier = Modifier.padding(horizontal = 16.dp)
+                    ) {
+                        screenModel.changeInstagram(it)
+                    }
+
                 }
-            }
-        })
+
+            }, footer = {
+                Column {
+                    PrimaryButton(
+                        text = "Сохранить",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(16.dp)
+                    ) {
+                        screenModel.editProfile()
+                    }
+                }
+            })
 
     }
 

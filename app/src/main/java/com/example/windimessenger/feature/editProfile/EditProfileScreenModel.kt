@@ -9,7 +9,8 @@ import com.example.windimessenger.domain.useCase.EditProfileUseCase
 import com.example.windimessenger.domain.useCase.ProfileUseCase
 import org.koin.core.component.inject
 
-class EditProfileScreenModel : BaseScreenModel<EditProfileState, Any>(EditProfileState.Default) {
+class EditProfileScreenModel :
+    BaseScreenModel<EditProfileState, EditProfileEvent>(EditProfileState.Default) {
 
     private val profileUseCase: ProfileUseCase by inject()
     private val editProfileUseCase: EditProfileUseCase by inject()
@@ -89,7 +90,7 @@ class EditProfileScreenModel : BaseScreenModel<EditProfileState, Any>(EditProfil
                     )
                 )
             }, success = {
-                println()
+                setEvent(EditProfileEvent.Success)
             })
         } else {
             val hasNameError = state.value.name.isBlank()
