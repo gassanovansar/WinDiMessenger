@@ -85,6 +85,15 @@ dependencies {
     implementation(libs.retrofit2.converter.gson)
     implementation(libs.retrofit2)
 
+    /**
+     * camera
+     */
+    implementation(libs.camera.camera2)
+    implementation(libs.camera.lifecycle)
+    implementation(libs.camera.view)
+
+    implementation("com.google.accompanist:accompanist-permissions:0.36.0")
+
 
     /**
      * Modules

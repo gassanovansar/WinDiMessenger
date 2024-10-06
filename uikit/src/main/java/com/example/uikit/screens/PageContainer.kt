@@ -33,7 +33,7 @@ import com.example.uikit.theme.AppTheme
 @Composable
 fun PageContainer(
     modifier: Modifier = Modifier,
-    background: Color = AppTheme.colors.shadows,
+    background: Color = AppTheme.colors.black,
     brush: Brush? = null,
     fill: Boolean = true,
     isLoading: State<Boolean> = mutableStateOf(false),

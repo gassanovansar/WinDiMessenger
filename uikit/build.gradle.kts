@@ -48,6 +48,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material)
+    implementation(libs.androidx.material3)
 
     /**
      * Voyager
@@ -57,9 +58,19 @@ dependencies {
     implementation(libs.voyager.tabNavigator)
     implementation(libs.voyager.screenModel)
 
+    /**
+     * Date
+     */
+    implementation(libs.kotlinx.datetime)
+    /**
+     * Coil
+     */
+    implementation(libs.coil3)
+
 
     /**
      * Modules
      */
     implementation(projects.models.domain)
+    implementation(projects.core)
 }

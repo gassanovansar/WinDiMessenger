@@ -86,7 +86,7 @@ abstract class BaseScreenModel<State : Any, Event : Any>(initState: State) : Scr
 
     protected val handler = CoroutineExceptionHandler { _, exception ->
         println(exception)
-        setError(Notification(exception.message ?: "Неизвестная ошибка"))
+            setError(Notification(exception.message ?: "Неизвестная ошибка"))
 
     }
 

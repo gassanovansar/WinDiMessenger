@@ -64,6 +64,11 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android)
 
+    /**
+     * Date
+     */
+    implementation(libs.kotlinx.datetime)
+
 
     /**
      * modules
