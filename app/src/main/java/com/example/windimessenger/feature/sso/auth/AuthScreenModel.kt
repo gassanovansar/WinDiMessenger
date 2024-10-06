@@ -26,15 +26,22 @@ class AuthScreenModel : BaseScreenModel<AuthState, AuthEvent>(AuthState.Default)
     }
 
     fun auth() {
-        launchOperation(operation = { scope ->
-            authUseCase(
-                scope,
-                AuthUseCase.Params("${state.value.country.code}${state.value.phone}")
-            )
-        }, success = {
-            if (it) {
-                setEvent(AuthEvent.Success)
-            }
-        })
+        if (state.value.isValid) {
+            setState { state.value.copy(hasPhoneError = false) }
+            launchOperation(operation = { scope ->
+                authUseCase(
+                    scope,
+                    AuthUseCase.Params("${state.value.country.code}${state.value.phone}")
+                )
+            }, success = {
+                if (it) {
+                    setEvent(AuthEvent.Success)
+                }
+            })
+        } else {
+            val hasPhoneError = state.value.phone.length != state.value.country.validation
+            setState { state.value.copy(hasPhoneError = hasPhoneError) }
+        }
+
     }
 }

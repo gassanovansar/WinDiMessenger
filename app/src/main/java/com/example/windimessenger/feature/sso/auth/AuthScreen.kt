@@ -56,6 +56,7 @@ class AuthScreen : Screen {
                         hint = "XXX XXX XX XX",
                         phoneCode = state.country.code,
                         phoneLength = state.country.validation,
+                        error = state.hasPhoneError,
                         modifier = Modifier
                             .padding(horizontal = 16.dp)
                             .padding(top = 64.dp),
@@ -69,7 +70,6 @@ class AuthScreen : Screen {
                     }
                     PrimaryButton(
                         text = "Вход",
-                        enabled = state.isValid,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
