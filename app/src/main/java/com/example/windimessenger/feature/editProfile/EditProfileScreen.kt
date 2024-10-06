@@ -28,6 +28,7 @@ import com.example.uikit.designe.toolBar.BackIcon
 import com.example.uikit.designe.toolBar.Toolbar
 import com.example.uikit.screens.PageContainer
 import com.example.uikit.theme.AppTheme
+import com.example.windimessenger.feature.country.CountryScreen
 import com.example.windimessenger.feature.tab.profile.ProfileItem
 
 class EditProfileScreen : Screen {
@@ -67,13 +68,17 @@ class EditProfileScreen : Screen {
                     value = state.name,
                     hint = "Введите имя",
                     modifier = Modifier.padding(horizontal = 16.dp)
-                ) {}
+                ) {
+                    screenModel.changeName(it)
+                }
                 AppTitleTextField(
                     "E-mail",
                     value = state.username,
                     hint = "Введите E-mail",
                     modifier = Modifier.padding(horizontal = 16.dp)
-                ) {}
+                ) {
+                    screenModel.changeEmail(it)
+                }
                 ProfileItem(
                     "Дата рождения",
                     value = state.birthday?.toDateIntUI() ?: "",
@@ -88,19 +93,27 @@ class EditProfileScreen : Screen {
                     "Город",
                     value = state.city,
                     hint = "Выберите город"
-                )
+                ) {
+                    bottomSheetNavigator.show(CountryScreen() {
+                        screenModel.changeCity(it)
+                    })
+                }
                 AppTitleTextField(
                     "ВКонтакте",
                     value = state.vk,
                     hint = "Ввелите аккаунт",
                     modifier = Modifier.padding(horizontal = 16.dp)
-                ) {}
+                ) {
+                    screenModel.changeVK(it)
+                }
                 AppTitleTextField(
                     "Инстаграм",
                     value = state.instagram,
                     hint = "Ввелите аккаунт",
                     modifier = Modifier.padding(horizontal = 16.dp)
-                ) {}
+                ) {
+                    screenModel.changeInstagram(it)
+                }
 
             }
 
