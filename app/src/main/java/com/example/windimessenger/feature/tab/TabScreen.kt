@@ -8,30 +8,23 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.example.core.ext.clickableRound
-import com.example.uikit.designe.appCard.AppCard
 import com.example.uikit.screens.PageContainer
 import com.example.uikit.theme.AppTheme
 
-class TabScreen(private val tab: Tab = ProfileTabScreen) : Screen {
+class TabScreen(private val tab: Tab = ChatsTabScreen) : Screen {
 
     @Composable
     override fun Content() {
@@ -50,7 +43,7 @@ class TabScreen(private val tab: Tab = ProfileTabScreen) : Screen {
                             .background(AppTheme.colors.shadows)
                             .padding(vertical = 8.dp)
                     ) {
-                        TabNavItem(MainTabScreen)
+                        TabNavItem(ChatsTabScreen)
                         TabNavItem(ProfileTabScreen)
                     }
                 }

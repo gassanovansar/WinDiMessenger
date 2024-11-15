@@ -6,13 +6,13 @@ import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.example.windimessenger.R
-import com.example.windimessenger.feature.tab.main.MainScreen
+import com.example.windimessenger.feature.tab.main.ChatsScreen
 
-object MainTabScreen : Tab {
+object ChatsTabScreen : Tab {
 
     @Composable
     override fun Content() {
-        Navigator(MainScreen())
+        Navigator(ChatsScreen())
     }
 
     override val options: TabOptions
